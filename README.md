@@ -19,3 +19,7 @@ You can easily install it with:
 ```bash
 cargo install --path .
 ```
+and execute with:
+```bash
+disklook
+``
