@@ -12,3 +12,10 @@ A beautiful and minimalist CLI storage space visualizer written in Rust.
 - Fast and lightweight
 
 ---
+
+## Installation
+
+You can easily install it with:
+```bash
+cargo install --path .
+```
