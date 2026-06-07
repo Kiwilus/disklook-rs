@@ -13,6 +13,13 @@ A beautiful and minimalist CLI storage space visualizer written in Rust.
 
 ---
 
+## Quick demonstration
+
+![disklook Usage Demo](img/demonstration.png)
+
+
+---
+
 ## Installation
 
 You can easily install it with:
@@ -23,3 +30,5 @@ and execute with:
 ```bash
 disklook
 ```
+
+---
