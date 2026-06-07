@@ -11,13 +11,13 @@ fn disk_usage_info(total: u64, available: u64) -> (f64, f64, f64) {
     let available_gb = available as f64 / 1_073_741_824.0;
     let used_gb = total_gb - available_gb;
 
-    let prozent = if total > 0 {
+    let precent = if total > 0 {
         (used_gb / total_gb) * 100.0
     } else {
         0.0
     };
 
-    (prozent, used_gb, total_gb)
+    (precent, used_gb, total_gb)
 }
 
 fn main() -> Result<(), io::Error> {
@@ -29,7 +29,7 @@ fn main() -> Result<(), io::Error> {
     for disk in &disks {
         let total = disk.total_space();
         let available = disk.available_space();
-        let (prozent, used_gb, total_gb) = disk_usage_info(total, available);
+        let (precent, used_gb, total_gb) = disk_usage_info(total, available);
 
         // Prepare text for the current hard drive
         let title_line = Line::from(vec![
@@ -43,7 +43,7 @@ fn main() -> Result<(), io::Error> {
                 disk.kind(),
                 used_gb,
                 total_gb,
-                prozent
+                precent
             )),
         ]);
 
@@ -51,24 +51,24 @@ fn main() -> Result<(), io::Error> {
         println!("{}", title_line);
 
         // progress bar out of Charakters
-        let balken_breite = 40;
-        let belegte_blöcke = ((prozent / 100.0) * balken_breite as f64).round() as usize;
+        let bar_width = 40;
+        let occupied_blocks = ((precent / 100.0) * bar_width as f64).round() as usize;
         
         // Determine color
-        let farb_code = if prozent > 90.0 {
-            "\x1b[31m" // Rot
-        } else if prozent > 75.0 {
-            "\x1b[33m" // Gelb
+        let color_code = if precent > 90.0 {
+            "\x1b[31m" // red
+        } else if precent > 75.0 {
+            "\x1b[33m" // yellow
         } else {
-            "\x1b[32m" // Grün
+            "\x1b[32m" // green
         };
         let reset_code = "\x1b[0m";
 
         // Assemble bars
-        let gefüllt = "#".repeat(belegte_blöcke);
-        let leer = "~".repeat(balken_breite - belegte_blöcke);
+        let filled = "#".repeat(occupied_blocks);
+        let empty = "~".repeat(bar_width - occupied_blocks);
 
-        println!("   [{}{}{}]\n", farb_code, gefüllt, reset_code.to_string() + &leer);
+        println!("   [{}{}{}]\n", color_code, filled, reset_code.to_string() + &empty);
     }
 
     Ok(())

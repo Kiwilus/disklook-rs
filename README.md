@@ -22,4 +22,4 @@ cargo install --path .
 and execute with:
 ```bash
 disklook
-``
+```
